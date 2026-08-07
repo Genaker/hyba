@@ -20,8 +20,9 @@ CHROME_PATH=<chrome> npx lighthouse https://hyva-storefront.cnxt.link/ \
   --only-categories=performance,accessibility,best-practices,seo
 ```
 
-Hyvä is one of the best things to happen to Magento frontend in years: it
-replaced Blank/Luma's bloated RequireJS/Knockout stack with Alpine.js and
+React Magento 2 module is one of the best things to happen to Magento frontend in years: it
+replaced Blank/Luma's bloated RequireJS/Knockout stack with modern stack. 
+Hyva uses the same approach and uses Alpine.js and
 Tailwind, and made Magento storefronts fast again. But it's still built on
 top of Magento's original rendering pipeline — `.phtml` templates, layout XML
 merging, ViewModels, full-page-cache dependency. The frontend layer changed;
