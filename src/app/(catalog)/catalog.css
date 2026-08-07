@@ -1,0 +1,103 @@
+/* Catalog bundle — the ONLY stylesheet on catalog pages (home, category,
+   product, CMS, search, 404). Chrome sources are repeated in customer.css
+   so every page ships exactly one CSS file. */
+@import "tailwindcss" source(none);
+@import "../theme.css";
+@source "../layout.tsx";
+@source "./**/*.tsx";
+@source "../../components/Header.tsx";
+@source "../../components/MegaMenu.tsx";
+@source "../../components/LanguageSwitcher.tsx";
+@source "../../components/Footer.tsx";
+@source "../../components/ProductTile.tsx";
+@source "../../components/ProductRow.tsx";
+@source "../../components/SortSelect.tsx";
+@source "../../components/ProductListing.tsx";
+@source "../../components/Breadcrumbs.tsx";
+@source "../../components/AddToCartButton.tsx";
+@source "../../components/AddToShoppingList.tsx";
+@source "../../components/Container.tsx";
+@source "../../components/PageHeader.tsx";
+@source "../../components/ProductDetail.tsx";
+@source "../../components/ProductGallery.tsx";
+@source "../../components/ProductGalleryMain.tsx";
+@source "../../components/ProductGalleryThumbs.tsx";
+@source "../../components/ProductRecommendations.tsx";
+@source "../../components/WishlistButton.tsx";
+@source "../../components/CompareButton.tsx";
+@source "../../components/CategoryContent.tsx";
+@source "../../components/CmsContent.tsx";
+@source "../../components/CmsContentBlock.tsx";
+@source "../../lib/cms-tailwind-classes.ts"; /* whitelist for Tailwind classes used inside CMS content — see that file */
+@source "../../components/hyba/**/*.{ts,tsx}"; /* Alpine islands + inline factory scripts — see src/components/hyba/README.md */
+@source "../../overrides/*.tsx"; /* custom-theme overrides — see overrides.yaml */
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Tailwind 4 preflight sets cursor:default on buttons — restore the pointer
+   on everything clickable (buttons, toggle labels, <details> summaries). */
+button:not(:disabled), label[for], summary { cursor: pointer; }
+
+/* Alpine hasn't initialized a component yet — hide anything marked x-cloak
+   until it has, so drawers/menus/overlays don't flash open before Alpine
+   attaches (Alpine itself removes the attribute once a component mounts). */
+[x-cloak] { display: none !important; }
+
+/* Cart drawer (CartDrawer.tsx): native <dialog>, shown via showModal()/close() rather than
+   Alpine's x-show, so the slide-in/out + backdrop fade is CSS-only, keyed off [open] —
+   allow-discrete + @starting-style is what lets a property (transform) animate across the
+   display:none <-> shown boundary a native dialog toggles. */
+.cart-drawer-panel {
+  transform: translateX(100%);
+  transition: transform 300ms ease-in-out, overlay 300ms ease-in-out allow-discrete, display 300ms ease-in-out allow-discrete;
+}
+.cart-drawer-panel[open] { transform: translateX(0); }
+@starting-style {
+  .cart-drawer-panel[open] { transform: translateX(100%); }
+}
+.cart-drawer-panel::backdrop {
+  background: rgb(0 0 0 / 0);
+  transition: background-color 300ms ease-in-out, overlay 300ms ease-in-out allow-discrete, display 300ms ease-in-out allow-discrete;
+}
+.cart-drawer-panel[open]::backdrop { background: rgb(0 0 0 / 0.4); }
+@starting-style {
+  .cart-drawer-panel[open]::backdrop { background: rgb(0 0 0 / 0); }
+}
+
+/* CMS / product rich text */
+.rich-text h2 { font-size: 1.25rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+.rich-text h3 { font-size: 1.1rem; font-weight: 600; margin: 1rem 0 0.5rem; }
+.rich-text p { margin: 0.6rem 0; line-height: 1.65; }
+.rich-text ul { list-style: disc; padding-left: 1.4rem; margin: 0.6rem 0; }
+.rich-text ol { list-style: decimal; padding-left: 1.4rem; margin: 0.6rem 0; }
+.rich-text a { color: var(--color-brand-600); text-decoration: underline; }
+.rich-text table { border-collapse: collapse; margin: 0.75rem 0; }
+.rich-text td, .rich-text th { border: 1px solid #d8dee1; padding: 0.4rem 0.7rem; }
+
+/* CSS-only hero slider: scroll-snap + anchor dots */
+.slider { scroll-snap-type: x mandatory; scroll-behavior: smooth; }
+.slider > * { scroll-snap-align: start; }
+
+/* Mobile filter-sidebar toggle (ProductListing.tsx) — chevron rotate on open.
+   Not a Tailwind peer-checked utility: the chevron is nested inside the
+   <label>, not a direct sibling of the checkbox, which peer-checked can't
+   reach (its generated selector is a sibling combinator, not descendant). */
+.filter-toggle-checkbox:checked ~ .filter-toggle .filter-toggle-chevron { transform: rotate(180deg); }
+
+/* Close-on-navigate (public/js/mega-menu.js): CSS :hover can't be cleared from
+   script, so the island stamps this attribute after a nav link is clicked and
+   drops it when the pointer leaves the nav. */
+.navigation[data-menu-suppressed] .submenu { visibility: hidden; opacity: 0; }
+
+/* Per-facet accordions (Color, Size, …) — native <details open>, so open-by-default
+   needs no JS; this just flips the chevron via the browser's own [open] state. */
+details.filter-group[open] > summary .filter-title-chevron { transform: rotate(180deg); }
+
+/* Human-styles entry point — semantic-class customizations and themes (THEMING.md) */
+
+/* Human-styles entry point — semantic-class customizations and themes (THEMING.md) */
+@import "../../overrides/custom.css";

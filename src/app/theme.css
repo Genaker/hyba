@@ -1,0 +1,26 @@
+/* Design tokens shared by all CSS entries. Emitted once via globals.css;
+   route-group bundles import it with theme(reference) to resolve utilities.
+
+   This fork (hyva, see /var/www/storefront/hyva) always runs data-theme="hyba" — no other
+   theme shares this build — so the Hyba retune lives directly in the token VALUES here rather
+   than a [data-theme='hyba'] override block in custom.css. Token NAMES are unchanged so every
+   existing `bg-brand-600`/`text-ink`/etc. utility across the app keeps resolving as-is — this
+   is a palette retune, not a rename.
+
+   Direction: a forest-green primary and a near-black/near-white base with a faint green tint,
+   not blue — measured from demo.hyva.io's own *computed* styles (getComputedStyle() on its
+   live buttons/cards/text, converted from oklch()/color(srgb) to hex), not its CSS/JS source,
+   consistent with the fork's licensing note in the implementation plan: we re-implement the
+   spirit with our own values, we don't transcribe their stylesheet. */
+@theme {
+  --color-brand-50: #eef3ef;
+  --color-brand-100: #d7e3da;
+  --color-brand-500: #4a7355;
+  --color-brand-600: #35563a;
+  --color-brand-700: #28402c;
+  --color-accent: #c17a3d;
+  --color-ink: #1a2420;
+  --color-paper: #fafbf9;
+  --color-mist: #eef1ee;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}

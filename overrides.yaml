@@ -1,0 +1,16 @@
+# Declares which core components (src/components/<Name>.tsx) can be
+# swapped by a custom theme. To override one, drop a file with the same
+# name in src/overrides/ — no build config to touch, just add/remove files.
+# See README "Custom themes" for the full mechanism and how to extend
+# (rather than fully replace) the original from inside an override file.
+#
+# Adding a name here without a matching src/overrides/<Name>.tsx file is a
+# no-op — @/theme/<Name> just resolves to the core component, same as today.
+components:
+  - Header
+  - Footer
+  - Container
+  - PageHeader
+  - ProductDetail
+  - CategoryContent
+  - CmsContent

@@ -1,0 +1,46 @@
+{
+  "name": "storefront-hyva",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "predev": "node scripts/sync-vendor.mjs",
+    "dev": "next dev",
+    "prebuild": "node scripts/sync-vendor.mjs",
+    "build": "next build",
+    "start": "node server.mjs",
+    "start:nojs": "JS_MODE=zero node server.mjs",
+    "start:js": "JS_MODE=full node server.mjs",
+    "lint": "eslint",
+    "test:unit": "node --import tsx --test \"tests/unit/**/*.test.ts\" \"tests/unit/**/*.test.tsx\"",
+    "test:e2e": "npm run build && node --experimental-strip-types --test \"tests/e2e/**/*.test.ts\"",
+    "test:integration": "npm run build && node --experimental-strip-types --test \"tests/integration/**/*.test.ts\""
+  },
+  "dependencies": {
+    "alpinejs": "^3.15.12",
+    "next": "16.2.11",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sharp": "^0.35.3",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/alpinejs": "^3.13.11",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.11",
+    "playwright-core": "^1.61.1",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.1",
+    "typescript": "^5"
+  },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 111",
+    "safari >= 16.4",
+    "not dead"
+  ]
+}

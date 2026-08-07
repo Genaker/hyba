@@ -1,0 +1,442 @@
+/* Custom human styles — the CSS side of theming (see THEMING.md).
+   Every component ships stable semantic classes (page-header, navigation,
+   product-item, cart-item-qty, …) alongside its Tailwind utilities, so you
+   restyle the storefront here with plain CSS — no TSX edits, no rebuild of
+   the class map. Scope a whole look under [data-theme="<name>"] and activate
+   it with `site.theme: <name>` in config.yaml (or THEME=<name> env);
+   unscoped rules apply always. Design tokens from src/app/theme.css
+   (var(--color-brand-600), var(--color-ink), …) are available here. */
+
+/* ---- Luma theme — Magento Luma-flavored header/nav, ships with the
+        raw-magento-data catalog. Activate: site.theme: luma ---- */
+
+[data-theme='luma'] .page-header {
+  background: #fff;
+  border-bottom: none;
+}
+
+[data-theme='luma'] .header-notice {
+  background: #006bb4; /* Luma blue */
+}
+
+[data-theme='luma'] .header-link,
+[data-theme='luma'] .minicart-toggle {
+  color: #006bb4;
+}
+
+[data-theme='luma'] .search-button {
+  background: #006bb4;
+}
+[data-theme='luma'] .search-button:hover {
+  background: #00518a;
+}
+
+[data-theme='luma'] .search-input {
+  border-radius: 3px; /* Luma's squarer inputs */
+}
+
+[data-theme='luma'] .navigation {
+  background: #f0f0f0;
+  border-top: none;
+  border-bottom: 1px solid #ccc;
+}
+
+[data-theme='luma'] .nav-link {
+  color: #575757;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+[data-theme='luma'] .nav-link:hover {
+  color: #333;
+}
+
+[data-theme='luma'] .submenu {
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+[data-theme='luma'] .minicart-count {
+  background: #006bb4;
+}
+
+[data-theme='luma'] .tocart,
+[data-theme='luma'] .cart-checkout,
+[data-theme='luma'] .minicart-checkout,
+[data-theme='luma'] .place-order {
+  background: #1979c3; /* Luma action-primary blue */
+  border: 1px solid #1979c3;
+}
+[data-theme='luma'] .tocart:hover,
+[data-theme='luma'] .cart-checkout:hover,
+[data-theme='luma'] .minicart-checkout:hover,
+[data-theme='luma'] .place-order:hover {
+  background: #006bb4;
+}
+
+/* ---- Salesforce theme — matches the real Alpine Group reference site
+        (alpine-group-headless.herokuapp.com) header pixel-for-pixel: colors/
+        fonts/radii below are copied from its computed styles, not guessed.
+        Ships with the raw-salesforce-data catalog. Activate: site.theme: salesforce ---- */
+
+[data-theme='salesforce'] .page-header {
+  background: #fff;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* The reference site has no promo strip above its nav — closest match is to drop ours. */
+[data-theme='salesforce'] .header-notice {
+  display: none;
+}
+
+[data-theme='salesforce'] .header-link,
+[data-theme='salesforce'] .minicart-toggle {
+  color: #212529;
+  font-weight: 600;
+}
+
+/* Header.tsx hardcodes a 142x44 (~3.2:1) box sized for the other datasets' more
+   square logos; Alpine Group's real wordmark is ~6.1:1 (250x41) and would be
+   squished into that box otherwise — width:auto lets it keep its own aspect ratio. */
+[data-theme='salesforce'] .logo-image {
+  width: 195px;
+  height: auto;
+}
+
+/* Reference: a single bordered, rounded input with an inset search icon and no
+   separate filled button — ours keeps a real <button> (it has to stay clickable/
+   submittable) but visually folds it into the same pill instead of a blue block. */
+[data-theme='salesforce'] .search-input {
+  border-radius: 6px 0 0 6px;
+  border-color: #dee2e6;
+}
+[data-theme='salesforce'] .search-button {
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  color: #aaa;
+}
+[data-theme='salesforce'] .search-button:hover {
+  color: #300057;
+  background: #f7f5f9;
+}
+
+[data-theme='salesforce'] .navigation {
+  background: #fff;
+  border-top: none;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* rgb(71,84,103) / 600 weight — the reference nav's inactive-link style; the
+   hover treatment approximates its highlighted-pill look for the current page
+   (that needs an actual "is this the active page" check to replicate exactly,
+   which is component logic, not CSS — this is the closest a stylesheet alone gets). */
+[data-theme='salesforce'] .nav-link {
+  color: #475467;
+  font-weight: 600;
+  border-radius: 10px;
+}
+[data-theme='salesforce'] .nav-link:hover {
+  background: #f7f5f9;
+  color: #300057;
+}
+
+[data-theme='salesforce'] .minicart-count {
+  background: #300057;
+}
+
+[data-theme='salesforce'] .tocart,
+[data-theme='salesforce'] .cart-checkout,
+[data-theme='salesforce'] .minicart-checkout,
+[data-theme='salesforce'] .place-order {
+  background: #300057; /* Alpine Group's real accent purple, from the active-nav-pill color */
+  border: 1px solid #300057;
+  border-radius: 6px;
+}
+[data-theme='salesforce'] .tocart:hover,
+[data-theme='salesforce'] .cart-checkout:hover,
+[data-theme='salesforce'] .minicart-checkout:hover,
+[data-theme='salesforce'] .place-order:hover {
+  background: #22003f;
+}
+
+/* Hero slides use the real Alpine banner photos (dark water/night-sky/gym) —
+   white text like the reference site, not the default ink. */
+[data-theme='salesforce'] .hero-slide-title {
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+[data-theme='salesforce'] .hero-slide-text {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+[data-theme='salesforce'] .hero-slide-cta {
+  background: #300057;
+}
+[data-theme='salesforce'] .hero-slide-cta:hover {
+  background: #22003f;
+}
+
+/* ---- Hydrogen theme — matches Shopify's real Hydrogen demo store
+        (hydrogen.shop) design tokens: colors/fonts/radii extracted from its
+        live app.css (--color-accent: 191 72 0, --color-primary: 20 20 20,
+        --color-contrast: 250 250 249, font-family: Helvetica Neue…, a
+        IBMPlexSerif accent face, small .25–.375rem radii), not guessed.
+        Ships with the raw-shopify-data catalog. Activate: site.theme: hydrogen ---- */
+
+[data-theme='hydrogen'] .page-header {
+  background: #fafaf9; /* real --color-contrast (light mode) */
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* hydrogen.shop has no promo strip above its nav — closest match is to drop ours. */
+[data-theme='hydrogen'] .header-notice {
+  display: none;
+}
+
+[data-theme='hydrogen'] .header-link,
+[data-theme='hydrogen'] .minicart-toggle {
+  color: #141414; /* real --color-primary (light mode) */
+  font-family: 'Helvetica Neue', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif;
+}
+
+/* Logo box: Header.tsx hardcodes a 142x44 (~3.2:1) box for the other datasets'
+   more square logos; this theme's text wordmark is wider — width:auto keeps
+   its own aspect ratio, same fix the salesforce theme applies for its wordmark. */
+[data-theme='hydrogen'] .logo-image {
+  width: 148px;
+  height: auto;
+}
+
+[data-theme='hydrogen'] .search-button {
+  background: #bf4800; /* real --color-accent (light mode) */
+  border-radius: 0 .375rem .375rem 0;
+}
+[data-theme='hydrogen'] .search-button:hover {
+  background: #8f3600;
+}
+
+[data-theme='hydrogen'] .search-input {
+  border-radius: .375rem 0 0 .375rem;
+  border-color: #e5e7eb;
+}
+
+[data-theme='hydrogen'] .navigation {
+  background: #fafaf9;
+  border-top: none;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+[data-theme='hydrogen'] .nav-link {
+  color: #141414;
+  font-weight: 600;
+  border-radius: .25rem;
+}
+[data-theme='hydrogen'] .nav-link:hover {
+  background: #f0efed;
+  color: #bf4800;
+}
+
+[data-theme='hydrogen'] .submenu {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: .375rem;
+}
+
+[data-theme='hydrogen'] .minicart-count {
+  background: #bf4800;
+}
+
+[data-theme='hydrogen'] .tocart,
+[data-theme='hydrogen'] .cart-checkout,
+[data-theme='hydrogen'] .minicart-checkout,
+[data-theme='hydrogen'] .place-order {
+  background: #bf4800;
+  border: 1px solid #bf4800;
+  border-radius: .375rem;
+  font-weight: 600;
+}
+[data-theme='hydrogen'] .tocart:hover,
+[data-theme='hydrogen'] .cart-checkout:hover,
+[data-theme='hydrogen'] .minicart-checkout:hover,
+[data-theme='hydrogen'] .place-order:hover {
+  background: #8f3600;
+}
+
+[data-theme='hydrogen'] .product-item {
+  border-radius: .375rem;
+}
+
+/* Hero slides use real collection banner photos — hydrogen.shop's own serif
+   accent face (IBMPlexSerif, found in its app.css) for the headline, matching
+   the branded look of its real hero/collection banners. */
+[data-theme='hydrogen'] .hero-slide-title {
+  font-family: 'IBM Plex Serif', Palatino, ui-serif, serif;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+[data-theme='hydrogen'] .hero-slide-text {
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+[data-theme='hydrogen'] .hero-slide-cta {
+  background: #bf4800;
+  border-radius: .375rem;
+}
+[data-theme='hydrogen'] .hero-slide-cta:hover {
+  background: #8f3600;
+}
+
+/* ---- Hero slider mechanics (public/js/hero-slider.js) — unscoped, applies to every theme.
+        Cross-fade between slides, edge arrows, bottom-center dots. The text card
+        (.hero-slide-card) and CTA button use plain Tailwind utilities already on the elements
+        (see extract-bigcommerce-data.mjs's markup) — the CTA's `text-white!` (important
+        variant) is required, not decorative: .rich-text a (CmsContentBlock's wrapper, see
+        catalog.css) sets `color: var(--color-brand-600)` with higher specificity than a plain
+        `text-white` utility, which made the button's own text render the same teal as its
+        background and disappear entirely. Everything below is what no whitelisted utility
+        expresses: the opacity transition, and the arrow/dot chrome (custom shapes/positioning,
+        not just a missing utility class). ---- */
+.hero-slider-slide {
+  opacity: 0;
+  transition: opacity 700ms ease;
+  pointer-events: none;
+}
+.hero-slider-slide--active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: background 150ms ease, transform 150ms ease;
+}
+.hero-slider-arrow:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.08);
+}
+.hero-slider-prev {
+  left: 1rem;
+}
+.hero-slider-next {
+  right: 1rem;
+}
+
+.hero-slider-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: .75rem;
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+}
+.hero-slider-dot {
+  width: .625rem;
+  height: .625rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  padding: 0;
+  cursor: pointer;
+  transition: background 150ms ease, transform 150ms ease;
+}
+.hero-slider-dot--active {
+  background: #fff;
+  transform: scale(1.15);
+}
+
+/* ---- Hyba theme — this fork's own design (see /var/www/storefront/hyva), inspired by the
+        architecture of Magento's Hyvä theme but not transcribed from demo.hyva.io. Ships with
+        raw-magento-data. Activate: site.theme: hyba.
+        Palette itself lives in src/app/theme.css (this fork always runs this theme, so the
+        tokens are retuned in place); these are the refinements too specific for a token swap
+        alone — crisper focus rings, firmer button press feedback, denser card borders. ---- */
+
+[data-theme='hyba'] a:focus-visible,
+[data-theme='hyba'] button:focus-visible,
+[data-theme='hyba'] input:focus-visible,
+[data-theme='hyba'] select:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+[data-theme='hyba'] .tocart,
+[data-theme='hyba'] .newsletter-submit,
+[data-theme='hyba'] .cart-drawer-checkout {
+  transition: transform 100ms ease, background-color 150ms ease;
+}
+[data-theme='hyba'] .tocart:active:not(:disabled),
+[data-theme='hyba'] .newsletter-submit:active,
+[data-theme='hyba'] .cart-drawer-checkout:active {
+  transform: scale(0.97);
+}
+
+[data-theme='hyba'] .product-item {
+  border-color: var(--color-mist);
+}
+[data-theme='hyba'] .swatch-option {
+  transition: transform 100ms ease, border-color 100ms ease;
+}
+[data-theme='hyba'] .swatch-option[aria-pressed='true'] {
+  transform: scale(1.05);
+}
+
+/* Flat, border-based depth instead of drop shadows, and one consistent 8px radius on every
+   card/dropdown/panel — demo.hyva.io's own computed styles show box-shadow: none and
+   border-radius: 8px across buttons, product cards and menus alike; components here ship
+   Tailwind's rounded-xl (12px) and shadow-lg/xl/2xl by default, this reins both in per-theme
+   without touching the TSX. */
+[data-theme='hyba'] .product-item,
+[data-theme='hyba'] .product-row,
+[data-theme='hyba'] .language-switcher-list,
+[data-theme='hyba'] .mini-search-suggestions,
+[data-theme='hyba'] .product-gallery-frame,
+[data-theme='hyba'] .product-specs-list,
+[data-theme='hyba'] .products-compact,
+[data-theme='hyba'] .products-empty,
+[data-theme='hyba'] .product-image-placeholder,
+[data-theme='hyba'] .submenu-promo-image,
+[data-theme='hyba'] .product-gallery-lightbox-close {
+  border-radius: 0.5rem;
+}
+
+[data-theme='hyba'] .product-item,
+[data-theme='hyba'] .product-row,
+[data-theme='hyba'] .language-switcher-list,
+[data-theme='hyba'] .mini-search-suggestions,
+[data-theme='hyba'] .product-gallery-lightbox-close {
+  box-shadow: none;
+}
+
+[data-theme='hyba'] .product-item:hover,
+[data-theme='hyba'] .product-row:hover {
+  box-shadow: none;
+  border-color: var(--color-brand-500);
+}
+
+[data-theme='hyba'] .submenu {
+  box-shadow: none;
+  border-bottom: 1px solid var(--color-mist);
+}
+
+[data-theme='hyba'] .cart-drawer-panel {
+  box-shadow: none;
+  border-left: 1px solid var(--color-mist);
+}

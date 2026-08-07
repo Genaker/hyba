@@ -1,0 +1,84 @@
+/* Customer bundle — the ONLY stylesheet on cart, checkout, account and login.
+   Chrome sources are repeated in catalog.css so every page ships one CSS file. */
+@import "tailwindcss" source(none);
+@import "../theme.css";
+@source "../layout.tsx";
+@source "./**/*.tsx";
+@source "../../components/Header.tsx";
+@source "../../components/MegaMenu.tsx";
+@source "../../components/LanguageSwitcher.tsx";
+@source "../../components/AddToCartButton.tsx";
+@source "../../components/Footer.tsx";
+@source "../../components/SubmitButton.tsx";
+@source "../../components/QuantityStepper.tsx";
+@source "../../components/Container.tsx";
+@source "../../components/hyba/**/*.{ts,tsx}"; /* Alpine islands + inline factory scripts — see src/components/hyba/README.md */
+@source "../../overrides/*.tsx"; /* custom-theme overrides — see overrides.yaml */
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Tailwind 4 preflight sets cursor:default on buttons — restore the pointer
+   on everything clickable (buttons, toggle labels, <details> summaries). */
+button:not(:disabled), label[for], summary { cursor: pointer; }
+
+/* Alpine hasn't initialized a component yet — hide anything marked x-cloak
+   until it has, so drawers/menus/overlays don't flash open before Alpine
+   attaches (Alpine itself removes the attribute once a component mounts). */
+[x-cloak] { display: none !important; }
+
+/* Cart drawer (CartDrawer.tsx): native <dialog>, shown via showModal()/close() rather than
+   Alpine's x-show, so the slide-in/out + backdrop fade is CSS-only, keyed off [open] —
+   allow-discrete + @starting-style is what lets a property (transform) animate across the
+   display:none <-> shown boundary a native dialog toggles. */
+.cart-drawer-panel {
+  transform: translateX(100%);
+  transition: transform 300ms ease-in-out, overlay 300ms ease-in-out allow-discrete, display 300ms ease-in-out allow-discrete;
+}
+.cart-drawer-panel[open] { transform: translateX(0); }
+@starting-style {
+  .cart-drawer-panel[open] { transform: translateX(100%); }
+}
+.cart-drawer-panel::backdrop {
+  background: rgb(0 0 0 / 0);
+  transition: background-color 300ms ease-in-out, overlay 300ms ease-in-out allow-discrete, display 300ms ease-in-out allow-discrete;
+}
+.cart-drawer-panel[open]::backdrop { background: rgb(0 0 0 / 0.4); }
+@starting-style {
+  .cart-drawer-panel[open]::backdrop { background: rgb(0 0 0 / 0); }
+}
+
+/* Quick Order SKU typeahead (public/js/quick-order-search.js) */
+.quick-order-sku-field { position: relative; }
+.sku-suggestions {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  z-index: 20;
+  margin-top: 0.25rem;
+  max-height: 16rem;
+  overflow-y: auto;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.25);
+}
+.sku-suggestion-button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.875rem;
+}
+.sku-suggestion-button:hover { background: var(--color-mist); }
+
+/* Close-on-navigate (public/js/mega-menu.js): CSS :hover can't be cleared from
+   script, so the island stamps this attribute after a nav link is clicked and
+   drops it when the pointer leaves the nav. */
+.navigation[data-menu-suppressed] .submenu { visibility: hidden; opacity: 0; }
+
+/* Human-styles entry point — semantic-class customizations and themes (THEMING.md) */
+@import "../../overrides/custom.css";

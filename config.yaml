@@ -1,0 +1,112 @@
+# Storefront feature configuration — single source of truth for both the Next
+# app (src/lib/config.ts) and the zero-JS server (server.mjs).
+# Restart the server after changes.
+#
+# Env overrides (deploy-time, without editing this file):
+#   JS_MODE=zero|hybrid|full       overrides javascript.mode
+#   HYDRATE_PATHS=/a,/b            overrides javascript.hydratePaths
+#   DATA_PROVIDER=raw-oro-data|raw-magento-data|raw-salesforce-data|raw-shopify-data|raw-shopware-data|raw-bigcommerce-data|oro   overrides dataProvider.provider
+#   FALLBACK_TO_RAW=true|false                        overrides dataProvider.fallbackToRaw
+
+javascript:
+  # zero   → strip React hydration scripts on every route (pure HTML+CSS;
+  #          forms still work as MPA POSTs, vanilla islands provide dynamics)
+  # hybrid → hydrate only hydratePaths; everything else zero-JS
+  # full   → stock Next.js hydration everywhere, no vanilla islands  (default)
+  #
+  # This fork (Hyvä-style theme, see /var/www/storefront/hyva) never hydrates
+  # React — ALL interactivity, on every page including cart/checkout/account,
+  # comes from Alpine.js islands + inline x-data factories + native forms, the
+  # same classic-MPA shape as Magento/Hyvä itself. React only runs server-side
+  # to produce HTML.
+  mode: zero
+  hydratePaths: []
+
+checkout:
+  # true → logged-out visitors can checkout as guest (email asked in the form);
+  # false → checkout requires signing in first
+  allowGuest: true
+
+fonts:
+  # false → system font stack only, zero downloads (fastest)
+  # true  → load the stylesheet below and put `family` first in the font stack
+  enabled: false
+  family: Inter
+  stylesheet: https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap
+
+# Image delivery (read by next.config.ts).
+images:
+  # Retina/HiDPI variants. OFF by default: a 2x/3x candidate is 4-9x the bytes
+  # for a difference most users never notice, and every extra width is another
+  # on-demand sharp transform on a RAM-constrained box. When false the candidate
+  # widths stop at the 1x design sizes, so a HiDPI screen gets the largest 1x
+  # image rather than a true 2x one. Set true to serve real 2x/3x variants.
+  retina: false
+
+site:
+  # Storefront branding — header logo, browser tab title, meta description.
+  # Also served as JSON by GET /api/storefront-config for any tooling that
+  # needs it without rendering a page. Keep this matched to dataProvider.provider
+  # below when switching catalogs — e.g. Luma branding for raw-magento-data,
+  # "Demo B2B" branding for raw-oro-data/oro, Alpine Group branding (see the
+  # commented block below) for raw-salesforce-data, Shopify branding for
+  # raw-shopify-data.
+  name: Luma
+  title: "Luma — Athletic Apparel & Gear (Hyba-style)"
+  metaDescription: "Athletic apparel and performance gear — a headless storefront demo built on Next.js, styled and architected in the Hyba theme spirit (Alpine.js islands, zero React hydration)."
+  logoUrl: /media/magento/logo.svg
+  logoAlt: Luma
+  # Visual theme: stamps <body data-theme="...">; human styles in
+  # src/overrides/custom.css scope under it (see THEMING.md). "" = default look.
+  theme: hyba
+  # To switch to the Salesforce/Alpine Group dataset, also set dataProvider.provider
+  # below to raw-salesforce-data and swap this whole site: block for:
+  #   name: Alpine Group
+  #   title: "Alpine Group — Coffee, Energy & Machines"
+  #   metaDescription: "Coffee, energy drinks and the machines to make them — a headless storefront demo built on Next.js."
+  #   logoUrl: /media/salesforce/logo.svg
+  #   logoAlt: Alpine Group
+  #   theme: salesforce
+  # To switch to the Shopify Hydrogen dataset (hydrogen.shop's real public demo
+  # store — snowboards, outerwear, accessories), also set dataProvider.provider
+  # below to raw-shopify-data and swap this whole site: block for:
+  #   name: Shopify
+  #   title: "Shopify Demo Store — Snowboards & Winter Gear"
+  #   metaDescription: "Snowboards, outerwear and accessories — a headless storefront demo built on Next.js, backed by Shopify's Hydrogen sample data."
+  #   logoUrl: /media/shopify/logo-shopify.svg
+  #   logoAlt: Shopify
+  #   theme: hydrogen
+  # To switch to the self-hosted Shopware demo dataset (shopware/docker-compose.yml,
+  # generated demo data extracted via its Store API), also set dataProvider.provider
+  # below to raw-shopware-data and swap this whole site: block for:
+  #   name: Shopware
+  #   title: "Shopware Demo Store"
+  #   metaDescription: "A generated demo catalog — a headless storefront demo built on Next.js, backed by a self-hosted Shopware 6 instance."
+  #   logoUrl: /media/shopware/logo.svg
+  #   logoAlt: Shopware
+  #   theme: ""
+  # To switch to the BigCommerce public APAC demo store dataset (real curated
+  # catalog scraped from apacdemostore.mybigcommerce.com), also set
+  # dataProvider.provider below to raw-bigcommerce-data and swap this whole
+  # site: block for:
+  #   name: BigCommerce
+  #   title: "BigCommerce Demo Store"
+  #   metaDescription: "A real curated catalog — a headless storefront demo built on Next.js, backed by BigCommerce's public APAC demo store."
+  #   logoUrl: /media/bigcommerce/logo.svg
+  #   logoAlt: BigCommerce
+  #   theme: ""
+
+dataProvider:
+  # raw-oro-data        → extracted-JSON OroCommerce demo data (src/data/oro/*.json), no external calls
+  # raw-magento-data    → extracted-JSON Magento Luma sample data (src/data/magento/*.json), no external calls  (default)
+  # raw-salesforce-data → extracted-JSON Salesforce B2B Commerce "Alpine Group" demo data (src/data/salesforce/*.json), no external calls
+  # raw-shopify-data    → extracted-JSON Shopify Hydrogen "hydrogen.shop" demo data (src/data/shopify/*.json), no external calls
+  # raw-shopware-data   → extracted-JSON self-hosted Shopware 6 demo data (src/data/shopware/*.json), no external calls
+  # raw-bigcommerce-data → extracted-JSON BigCommerce APAC demo store data (src/data/bigcommerce/*.json), no external calls
+  # oro                 → live OroCommerce storefront REST API (needs ORO_API_BASE_URL/CLIENT_ID/CLIENT_SECRET)
+  provider: raw-magento-data
+  # oro only. true  → wrap it with withFallback() against raw-oro-data, for what Oro's
+  #                    frontend API can't supply at all (brand, slider, login) or can't supply
+  #                    on listing pages (featured flag/facet) — see README "Going live against Oro"
+  # false → oro only, gaps come back null/empty/throw, nothing papered over
+  fallbackToRaw: true
