@@ -321,6 +321,11 @@ export default async function ProductListing({
           </div>
         </div>
 
+        {/* sr-only: guarantees an h2 directly precedes the h3 product titles regardless of
+            whether the filter sidebar's own h2s are visible — on mobile they're display:none
+            (peer-checked toggle) until expanded, which drops them from the accessibility tree
+            and skips straight from h1 to h3 without this. */}
+        <h2 className="sr-only">{t.products}</h2>
         {result.items.length === 0 ? (
           <p className="products-empty rounded-xl bg-mist p-10 text-center text-gray-600">{t.noProducts}</p>
         ) : activeView === 'list' ? (

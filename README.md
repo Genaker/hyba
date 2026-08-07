@@ -8,6 +8,18 @@
 |---|---|---|
 | [![Home](docs/screenshots/home.png)](https://hyva-storefront.cnxt.link/) | [![Category](docs/screenshots/category.png)](https://hyva-storefront.cnxt.link/women/tops-women/jackets-women) | [![Product](docs/screenshots/product.png)](https://hyva-storefront.cnxt.link/women/tops-women/jackets-women/adrienne-trek-jacket) |
 
+**Lighthouse**, same three pages, run against the live demo above:
+
+| Home | Category | Product |
+|---|---|---|
+| ![Lighthouse: home](docs/screenshots/lighthouse-home.png) | ![Lighthouse: category](docs/screenshots/lighthouse-category.png) | ![Lighthouse: product](docs/screenshots/lighthouse-product.png) |
+
+```bash
+CHROME_PATH=<chrome> npx lighthouse https://hyva-storefront.cnxt.link/ \
+  --chrome-flags="--headless --no-sandbox" --quiet \
+  --only-categories=performance,accessibility,best-practices,seo
+```
+
 Hyvä is one of the best things to happen to Magento frontend in years: it
 replaced Blank/Luma's bloated RequireJS/Knockout stack with Alpine.js and
 Tailwind, and made Magento storefronts fast again. But it's still built on

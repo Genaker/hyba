@@ -77,6 +77,7 @@ const en = {
     additionalInformation: 'Additional Information',
     relatedProducts: 'Related Products',
     enlargeImage: 'Enlarge image',
+    viewImage: 'View image',
     closeImage: 'Close image',
     similarProducts: 'Similar Products',
     accessories: 'Accessories',
@@ -145,6 +146,7 @@ const en = {
     sortPriceDesc: 'Price: high to low',
     sortSku: 'SKU',
     sortNewest: 'Newest first',
+    products: 'Products',
   },
   home: {
     featuredProducts: 'Featured Products',

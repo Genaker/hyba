@@ -71,6 +71,7 @@ const de: Dictionary = {
     additionalInformation: 'Weitere Informationen',
     relatedProducts: 'Ähnliche Produkte',
     enlargeImage: 'Bild vergrößern',
+    viewImage: 'Bild ansehen',
     closeImage: 'Bild schließen',
     similarProducts: 'Vergleichbare Produkte',
     accessories: 'Zubehör',
@@ -136,6 +137,7 @@ const de: Dictionary = {
     sortPriceDesc: 'Preis: absteigend',
     sortSku: 'Artikelnummer',
     sortNewest: 'Neueste zuerst',
+    products: 'Produkte',
   },
   home: {
     featuredProducts: 'Empfohlene Produkte',

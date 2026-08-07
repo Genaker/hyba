@@ -103,6 +103,7 @@ export default async function ProductDetail({
             pleaseSelectPrefix: t.pleaseSelectPrefix,
             pleaseSelectSuffix: t.pleaseSelectSuffix,
             combinationUnavailable: t.combinationUnavailable,
+            viewImage: t.viewImage,
           }}
           shoppingList={product.inStock ? <AddToShoppingList sku={product.sku} back={pathname} /> : null}
           actions={wishlistAndCompareActions}

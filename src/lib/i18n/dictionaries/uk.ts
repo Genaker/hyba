@@ -71,6 +71,7 @@ const uk: Dictionary = {
     additionalInformation: 'Додаткова інформація',
     relatedProducts: 'Схожі товари',
     enlargeImage: 'Збільшити зображення',
+    viewImage: 'Переглянути зображення',
     closeImage: 'Закрити зображення',
     similarProducts: 'Подібні товари',
     accessories: 'Аксесуари',
@@ -136,6 +137,7 @@ const uk: Dictionary = {
     sortPriceDesc: 'Ціна: від високої до низької',
     sortSku: 'Артикул',
     sortNewest: 'Спочатку нові',
+    products: 'Товари',
   },
   home: {
     featuredProducts: 'Популярні товари',

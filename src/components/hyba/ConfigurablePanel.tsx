@@ -41,6 +41,7 @@ export default function ConfigurablePanel({
     pleaseSelectPrefix: string;
     pleaseSelectSuffix: string;
     combinationUnavailable: string;
+    viewImage: string;
   };
   shoppingList: ReactNode;
   actions: ReactNode;
@@ -49,7 +50,7 @@ export default function ConfigurablePanel({
     ...buildConfigurablePanelData(product, rawParams, storefrontConfig.images.retina),
     // Static JS has no access to the server-side dictionary — the validation-message
     // pieces travel in with the rest of the Alpine config (see checkBeforeSubmit).
-    labels: { and: t.and, pleaseSelectPrefix: t.pleaseSelectPrefix, pleaseSelectSuffix: t.pleaseSelectSuffix, combinationUnavailable: t.combinationUnavailable },
+    labels: { and: t.and, pleaseSelectPrefix: t.pleaseSelectPrefix, pleaseSelectSuffix: t.pleaseSelectSuffix, combinationUnavailable: t.combinationUnavailable, viewImage: t.viewImage },
   };
 
   return (
@@ -70,6 +71,7 @@ export default function ConfigurablePanel({
                 {...alpineAttrs({
                   'x-on:click': 'selectThumb(index)',
                   'x-bind:class': "index === activeImageIndex ? 'border-brand-600' : 'border-transparent hover:border-mist'",
+                  'x-bind:aria-label': "labels.viewImage + ' ' + (index + 1)",
                 })}
                 className="configurable-gallery-thumb h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2"
               >
