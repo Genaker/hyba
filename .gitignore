@@ -47,3 +47,8 @@ next-env.d.ts
 # demo dataset media — this repo is the storefront app only, not a backend/data layer;
 # these are placeholder product images from a local demo dataset, not part of the app
 /public/media/
+
+# data-layer tooling — these extract/generate the local demo dataset (writing into the
+# gateway, not this app); this repo doesn't ship a backend, so they don't apply here
+/scripts/extract-*-data.mjs
+/scripts/optimize-images.mjs
