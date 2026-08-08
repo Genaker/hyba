@@ -8,11 +8,13 @@
 |---|---|---|
 | [![Home](docs/screenshots/home.png)](https://hyva-storefront.cnxt.link/) | [![Category](docs/screenshots/category.png)](https://hyva-storefront.cnxt.link/women/tops-women/jackets-women) | [![Product](docs/screenshots/product.png)](https://hyva-storefront.cnxt.link/women/tops-women/jackets-women/adrienne-trek-jacket) |
 
-**Lighthouse**, same three pages, run against the live demo above:
+**[PageSpeed Insights](https://pagespeed.web.dev/)** (mobile), same three pages, run against the live demo above — 100/100/100/100 on every one:
 
 | Home | Category | Product |
 |---|---|---|
-| ![Lighthouse: home](docs/screenshots/lighthouse-home.png) | ![Lighthouse: category](docs/screenshots/lighthouse-category.png) | ![Lighthouse: product](docs/screenshots/lighthouse-product.png) |
+| [![PageSpeed: home — 100/100/100/100](docs/screenshots/lighthouse-home.png)](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fhyva-storefront.cnxt.link%2F&form_factor=mobile) | [![PageSpeed: category — 100/100/100/100](docs/screenshots/lighthouse-category.png)](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fhyva-storefront.cnxt.link%2Fwomen%2Ftops-women%2Fjackets-women&form_factor=mobile) | [![PageSpeed: product — 100/100/100/100](docs/screenshots/lighthouse-product.png)](https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fhyva-storefront.cnxt.link%2Fwomen%2Ftops-women%2Fjackets-women%2Fadrienne-trek-jacket&form_factor=mobile) |
+
+Click any score above to re-run it live yourself, or run it locally against any URL:
 
 ```bash
 CHROME_PATH=<chrome> npx lighthouse https://hyva-storefront.cnxt.link/ \
